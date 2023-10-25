@@ -103,13 +103,19 @@ Stack<T>::~Stack() {
 #include <iostream>
 #include <windows.h>
 
+
 struct Raccoon {
     std::string name;
     int age;
     double weight;
 
     Raccoon(std::string n, int a, double w) : name(n), age(a), weight(w) {}
-    Raccoon(){}
+    Raccoon() {}
+
+    friend std::ostream& operator<<(std::ostream& os, const Raccoon& raccoon) {
+        os << "Имя: " << raccoon.name << ", Возраст: " << raccoon.age << ", Вес: " << raccoon.weight;
+        return os;
+    }
 };
 
 int main() {
@@ -119,13 +125,13 @@ int main() {
     raccoon_stack.add(Raccoon("Глеб", 2, 3.8));
     raccoon_stack.add(Raccoon("Бандит", 4, 5.2));
 
-    std::cout << "Енот в начале стека: " << raccoon_stack.show().name << std::endl;
+    std::cout << "Енот в начале стека: " << raccoon_stack.show()<< std::endl;
 
     raccoon_stack.remove();
-    std::cout << "Новый енот в начале: " << raccoon_stack.show().name << std::endl;
+    std::cout << "Новый енот в начале: " << raccoon_stack.show() << std::endl;
 
     raccoon_stack.clear();
-    std::cout << "Стэк очищен" << std::endl;
+    std::cout << "Стек очищен" << std::endl;
 
     return 0;
 }
