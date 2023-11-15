@@ -1,3 +1,5 @@
+Bitree.h
+
 #include <iostream>
 #include <time.h> 
 #include <Windows.h>
@@ -15,29 +17,29 @@ enum ColorConsole {
 };
 class Node {
 public:
-	std::string date;
+    std::string date;
     std::string color;
-	int score;
-	Node* right;
-	Node* left;
+    int score;
+    Node* right;
+    Node* left;
     Node* pref;
-	Node(std::string date) {
+    Node(std::string date) {
         color = "White";
-		this->date = date;
-		right = nullptr;
-		left = nullptr;
-		score = 1;
-	}
+        this->date = date;
+        right = nullptr;
+        left = nullptr;
+        score = 1;
+    }
 };
 
 class BiTree {
-	
+
     std::string found_str;
     char found_symbol;
     bool flag_found_str = 0;
     bool flag_found_symbol = 0;
-	void add_more(std::string date, Node* Newroot);
-	void remove_more(std::string date, Node * deleteNode);
+    void add_more(std::string date, Node* Newroot);
+    void remove_more(std::string date, Node* deleteNode);
     void paint_more_char(Node* left, Node* right);
     void paint_left_char(Node* left);
     void paint_right_char(Node* right);
@@ -124,9 +126,9 @@ class BiTree {
 
 public:
     Node* root;
-	void add(std::string date);
-	void remove(std::string date);
-	void show();
+    void add(std::string date);
+    void remove(std::string date);
+    void show();
     void paint();
     void FoundStr(std::string str);
     void FoundSymbol(char symbol);
@@ -136,12 +138,15 @@ public:
         return height(root);
     }
     int height(Node* root);
-	BiTree();
-	~BiTree();
+    BiTree();
+    ~BiTree();
     Node* GetRoot()const {
         return root;
     }
 };
+
+
+Bitree.cpp
 
 #include "BiTree.h"
 
@@ -225,8 +230,8 @@ void BiTree::remove_more(std::string date, Node* deleteNode)
 						current->pref->left = nullptr;
 						delete current;
 					}
-					
-					
+
+
 
 				}
 			}
@@ -295,7 +300,7 @@ void BiTree::paint() {
 				else {
 					root->color = "Green";
 				}
-				
+
 			}
 
 			if (root->right == nullptr && root->left == nullptr) {
@@ -488,7 +493,7 @@ void BiTree::paint_more_char(Node* right, Node* left) {
 			else {
 				right->color = "Blue";
 			}
-			
+
 		}
 		return paint_more_char(right->right, right->left);
 	}
@@ -586,7 +591,7 @@ int BiTree::GetLevel(Node* find)
 			return 0;
 		}
 		else {
-			while(find->date != temp->date){
+			while (find->date != temp->date) {
 				if (compare_string(find->date, temp->date) == 0) {
 					if (temp->right != nullptr) {
 						temp = temp->right;
@@ -595,8 +600,8 @@ int BiTree::GetLevel(Node* find)
 					else {
 						std::cout << "Node not found" << std::endl;
 					}
-					
-					
+
+
 				}
 				else if (compare_string(find->date, temp->date) == 1) {
 					if (temp->right != nullptr) {
@@ -611,7 +616,7 @@ int BiTree::GetLevel(Node* find)
 			return score;
 		}
 	}
-	
+
 }
 
 int BiTree::height(Node* root)
@@ -635,7 +640,7 @@ void BiTree::found_more(Node* found, std::string str) {
 		std::cout << found->date << std::endl;
 		return found_more(found->left, str);
 	}
-	else if(found->date == str){
+	else if (found->date == str) {
 		std::cout << found->date << std::endl;
 		return;
 	}
@@ -682,9 +687,15 @@ BiTree::BiTree()
 BiTree ::~BiTree() {
 
 }
-#include <string>
 
-bool compare_string(std::string left, std::string right);
+compare_string.h
+
+#pragma once
+#include <string>
+bool compare_string(std::string left, std::string right); 
+
+
+compare_string.cpp
 
 #include "compare_string.h"
 bool compare_string(std::string left, std::string right) {
@@ -718,20 +729,34 @@ bool compare_string(std::string left, std::string right) {
 	}
 }
 
-txt
 
-20
-2
-3
-10
-5
-6
-1
-8
-7
-4
-11
-15
-13
-28
-15
+main.cpp
+	
+#include "BiTree.h"
+
+int main() {
+    BiTree root;
+    root.add("20");
+    root.add("2");
+    root.add("3");
+    root.add("10");
+    root.add("5");
+    root.add("6");
+    root.add("1");
+    root.add("8");
+    root.add("7");
+    root.add("4");
+    root.add("11");
+    root.add("15");
+    root.add("13");
+    root.add("28");
+    root.add("15");
+    Node* ptr1 = root.root->right->right->right;
+    Node* ptr2 = root.root->right->left;
+    Node* ptr3 = root.root->right->right->right->right;
+    root.show();
+    std::cout << root.GetLevel(ptr1) << std::endl;
+    std::cout << root.GetLevel(ptr2) << std::endl;
+    std::cout << root.GetLevel(ptr3) << std::endl;
+    std::cout << root.MaxDepth() << std::endl;
+}
